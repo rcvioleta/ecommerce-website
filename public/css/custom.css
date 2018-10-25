@@ -1,0 +1,16 @@
+.overflow {
+	background-color: #609ab8;
+	height: 30rem;
+	width: 100rem;
+	padding: 5rem;
+	overflow-y: scroll;
+}
+
+.add_products {
+	width: 50%;
+}
+
+.btn-small {
+	padding: .5rem 1rem;
+	font-size: inherit;
+}

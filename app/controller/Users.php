@@ -5,7 +5,7 @@ class Users extends Controller {
 	}
 
 	public function index() {
-		$this->view('users/index');
+		$this->view('home/index');
 	}
 
 	public function login() {

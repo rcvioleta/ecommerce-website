@@ -1,9 +1,7 @@
 <?php
-/**
- * Core of the framework that manages controller and model
- */  
+#  Core of the framework that manages controller and model
 class Core {
-	private $controller = 'Home';
+	private $controller = 'Users';
 	private $method = 'index';
 	private $param = [];
 
