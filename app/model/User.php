@@ -38,8 +38,10 @@ class User {
 	}
 
 	public function register($data) {
-		$this->db->query('INSERT INTO users (firstname, lastname, email, password) 
-			                VALUES(:firstname, :lastname, :email, :password)');
+		$this->db->query(
+			'INSERT INTO users (firstname, lastname, email, password) 
+            VALUES(:firstname, :lastname, :email, :password)'
+        );
 
 		// Bind values
 		$this->db->bind(':firstname', $data['fname']);
@@ -47,12 +49,7 @@ class User {
 		$this->db->bind(':email', $data['email']);
 		$this->db->bind(':password', $data['password']);
 
-		if ($this->db->execute()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return $this->db->execute();
 	}
 
 	public function createUserSession($user) {

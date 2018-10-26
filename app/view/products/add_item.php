@@ -2,7 +2,9 @@
 <?php include_once APP_ROOT . '/view/includes/nav_bar.php'; ?>
 
 <div class="container add_products">
-	<form action="<?php echo URL_ROOT; ?>/items/add_new_item" method="POST">
+	<p><?php flash('new_item_added'); ?></p>
+	
+	<form action="<?php echo URL_ROOT; ?>/items/add" method="POST" enctype="multipart/form-data">
 	  	<div class="form-group">
 	    	<label for="inputItemName">Name of Item</label>
 	    	<input type="text" name="name_of_item" class="form-control <?php echo !empty($data['nameOfItemErr']) ? 'is-invalid' : ''; ?>" id="inputItemName" value="<?php echo $data['nameOfItem']; ?>">
