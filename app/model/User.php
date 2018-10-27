@@ -8,10 +8,8 @@ class User {
 
 	public function findUserByEmail($email) {
 		$this->db->query('SELECT * FROM users WHERE email = :email');
-		// Bind values
 		$this->db->bind(':email', $email);
-
-		$row = $this->db->singleResult();
+		$this->db->execute();
 
 		if ($this->db->rowCount() > 0) {
 			return true;

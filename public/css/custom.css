@@ -14,3 +14,24 @@
 	padding: .5rem 1rem;
 	font-size: inherit;
 }
+
+.flexbox {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.flexbox-item {
+	width: 23.33%;
+	margin: 2.5% 5%;
+}
+
+.image_preview {
+	width: 100%;
+	margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+	.flexbox-item {
+		width: 100%;
+	}
+}

@@ -19,10 +19,14 @@ class Items extends Controller {
 
 	public function index() {
 		# redirect user to the page where they can add products/items
+		die('<h1>Oops... Nothing to show here yet...</h1>');
+	}
+
+	public function add_new_item_form() {
 		$this->view('products/add_item', $this->data);
 	}
 
-	public function add() {
+	public function add_new_item() {
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			# sanitize all coming inputs from post request
 			$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -44,9 +48,12 @@ class Items extends Controller {
 				'itemImageErr' => ''
 			];	
 
-			# set directory of the images to be save
-			$imageDir = $_SERVER['DOCUMENT_ROOT'] . '/spurzt/public/images/product_images/'; 
-			$data['targetFile'] = $imageDir . basename($data['itemImage']);
+			# set directories of the images to be save
+			$imageDir = SERVER_ROOT . '/spurzt/public/images/product_images/'; 
+			# the directory that will be use for storing the file locally
+			$targetImage = $imageDir . basename($data['itemImage']); 
+			# the directory that will be use to store image path in the database
+			$data['targetFile'] = '/public/images/product_images/' . basename($data['itemImage']);
 
 			# check if user provided name for the item/product
 			if (empty($data['nameOfItem'])) {
@@ -90,11 +97,16 @@ class Items extends Controller {
 			# if no more errors add new item/product
 			if (empty($data['nameOfItemErr']) && empty($data['itemPriceErr']) && 
 				empty($data['itemQtyErr']) && empty($data['itemImageErr'])) {
-				# everything is good
-				if ($this->itemModel->addNewItem($data)) {
-					move_uploaded_file($data['tempItemImage'], $data['targetFile']);
-					flash('new_item_added', 'New item added');
-					redirect('items');
+				# check if item already exist in the database
+				if ($this->itemModel->findItemByName($data['nameOfItem'])) {
+					flash('adding_new_item', 'Item already exist', 'alert alert-danger');
+					redirect('items/add_new_item_form');
+				}
+				# everything is good, item ready for storing
+				elseif ($this->itemModel->addNewItem($data)) {
+					move_uploaded_file($data['tempItemImage'], $targetImage);
+					flash('adding_new_item', 'New item added');
+					redirect('items/add_new_item_form');
 				}
 			}
 			# if there are still remaining errors, redirect user to the same page with errors
@@ -105,6 +117,15 @@ class Items extends Controller {
 		else {
 			$this->view('products/add_item', $this->data);
 		}
+	}
+
+	public function show_products() {
+		$products = $this->itemModel->displayAllItems();
+		$data = [
+			'products' => $products
+		];
+
+		$this->view('products/display_items', $data);
 	}
 }
 ?>

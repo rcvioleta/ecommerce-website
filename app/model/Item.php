@@ -7,8 +7,11 @@ class Item {
 	}
 
 	# look for any instance of the item that the user is trying to add in the system
-	public function findItemById($id) {
-		
+	public function findItemByName($nameOfItem) {
+		$this->db->query('SELECT item_name FROM items WHERE item_name = :name');
+		$this->db->bind(':name', $nameOfItem);
+		$this->db->execute();
+		return ($this->db->rowCount() > 0);
 	}
 
 	# add new items/products to database
@@ -26,6 +29,13 @@ class Item {
 		$this->db->bind(':created', date('Y-m-d H:i:s'));
 
 		return $this->db->execute();
+	}
+
+	# fetch all items saved in the database
+	public function displayAllItems() {
+		$this->db->query('SELECT * FROM items');
+		$products = $this->db->multipleResult();
+		return $products;
 	}
 }
 ?>

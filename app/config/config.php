@@ -7,5 +7,6 @@
 
 	define('APP_ROOT', dirname(dirname(__FILE__))); # App root
 	define('URL_ROOT', 'http://localhost/spurzt'); # URL root
+	define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT']); # Server root
 	define('SITENAME', 'Spurzt'); # Website name
 ?>
